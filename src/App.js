@@ -3,26 +3,27 @@ import React from 'react';
 import './App.css';
 import DogList from './DogList'
 import Form from './Form';
+import { useState } from 'react';
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    //const testData = [
-      //{Name: "Terrier-Welsh", Link:"https:\/\/images.dog.ceo\/breeds\/terrier-welsh\/lucy.jpg"}
-    //]
-    this.state = {DogsData:[]}
-    
-  } 
-  addDogBreed = dogBreedData =>{
-    let nameStr = dogBreedData.substr(dogBreedData.indexOf("breeds")+7)
-    let name = nameStr.substr(0, nameStr.indexOf("/"))
-    const dogDataWithName = {Name: name, Link:dogBreedData};
-    this.setState(prevState => 
-      ({DogsData:[...prevState.DogsData, dogDataWithName]})
-      )
-    console.log("App", dogDataWithName)
+function App(props) {
+  const[dogsData, setDogsData] = useState([]);
+ 
+  function addDogBreed(dogBreedData) {
+    let nameStr = dogBreedData.substr(dogBreedData.indexOf("breeds")+7);
+    let breednName = nameStr.substr(0, nameStr.indexOf("/"));
+    const dogDataWithName = {name: breednName, link:dogBreedData};
+    dogsData.push(dogDataWithName);
+    setDogsData(dogsData);
+    //setDogsData([...dogsData,dogDataWithName])
+
+    //this.setState(prevState => 
+     // ({DogsData:[...prevState.DogsData, dogDataWithName]})
+      //)
+    console.log("instance", dogDataWithName);
+    console.log("array", dogsData);
+    console.log("array with ...", ...dogsData);
   }
-  render(){   
+ 
   return (
     
     <div className="App">
@@ -40,11 +41,11 @@ class App extends React.Component {
           Learn React
         </a>
       </header> */}
-      <Form onSubmit = {this.addDogBreed}></Form>
-      <DogList data = {this.state.DogsData}/>
+      <Form addDogBreedAction = {addDogBreed}></Form>
+      <DogList data = {dogsData} />
     </div>
 
   );
-}}
+}
 
 export default App;

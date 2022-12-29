@@ -1,19 +1,13 @@
 import React from "react";
-class Dog extends React.Component{
-    
-
-    
-    render(){
-     
-        const dogdata = this.props;
-        return (
+function Dog(props) {
+    //const dogdata = props;
+    console.log("Dog", props.name);
+    return (
         <div>
-        <h1>{dogdata.Name}</h1>    
-        <img src={dogdata.Link} alt={dogdata.Name} height={300}/>
-        
-        </div>)
-    }
-
+            <h1>{props.name}</h1>    
+            <img src={props.link} alt={props.name} height={300}/>
+        </div>
+    );
 }
 
 export default Dog

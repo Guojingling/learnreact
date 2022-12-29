@@ -1,53 +1,58 @@
 import React from "react";
-class Form extends React.Component{
-    state = {dogBreed:"", dogBreedName:"tempValue"}
+import { useState } from "react";
+function Form (props){
+    const[dogBreed, setDogBreed] = useState("");
+    const[dogBreedName, setDogBreedName] = useState("tempName");
+    const[error, setError] = useState(null);
+
+
     //userInput = React.createRef();
-    submitHandler = (e) =>{
+    function submitHandler(e) {
         e.preventDefault();
         //console.log(this.userInput.current.value)
         //console.log(document.getElementById("userInputbox").value)
         //console.log(this.state.dogBreed)
         //console.log(this.state.dogBreedName)
         let i=0;
-        while (i<4 &&!this.state.dogBreedName.includes(this.state.dogBreed)){
+        while (i<2 &&!dogBreedName.includes(dogBreed)){
         fetch("https://dog.ceo/api/breeds/image/random")
         .then(res => res.json())
         .then(
             (result) => {
-                this.setState({
-                   dogBreedName: result.message
-                });
-                this.props.onSubmit(result.message);
+                setDogBreedName(result.message);
+                props.addDogBreedAction(result.message);
             },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
-          this.setState({
+          setError(
             error
-          });
+          );
         }
       )
       i++;
     }
+
+    setDogBreed("");
         
     }
    
-    render(){     
+   
         return(
-            <form onSubmit={this.submitHandler}>
+            <form onSubmit={submitHandler}>
                 Dog Breed:
                 <input 
                     id = "userInputbox" 
                     type="text" 
                     placeholder="Dog breed" 
-                    value = {this.state.dogBreed}
-                    onChange = {e => this.setState({dogBreed:e.target.value})}
+                    value = {dogBreed}
+                    onChange = {e => setDogBreed(e.target.value)}
                     required></input>
-                <button>Search</button>
+                <button type="submit">Search</button>
             </form>
         )
-    }
+   
     
 }
 

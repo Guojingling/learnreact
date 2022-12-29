@@ -1,16 +1,19 @@
 import React from "react";
 import Dog from "./Dog";
 
-class DogList extends React.Component {
+function DogList(props) {
    
-    render(){
-    const DogsData = this.props.data
+    
+    const dogsData = props.data
+    console.log("Dog List", {dogsData})
+    
        
     return(
-        DogsData.map(dog => <Dog {...dog} key = {Math.random()}></Dog>)
+       
+        dogsData.map(dog => <Dog name={dog.name} link = {dog.link} key = {Math.random()}></Dog>)
         //DogsData.map(dog => <Dog Name={dog.Name} Link={dog.Link}></Dog>)
     )
-    }
+    
 }
 
 export default DogList
